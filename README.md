@@ -6,4 +6,9 @@ This project is a data write test project for Zookeeper, aiming to provide data 
 ```shell
 cd deployment/docker-compose
 docker-compose up -d
+
+cd conf && echo "4lw.commands.whitelist=*" >> zoo.cfg
+
+docker-compose restart
 ```
+
