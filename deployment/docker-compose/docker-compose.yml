@@ -10,6 +10,9 @@ services:
     environment:
       ZOO_MY_ID: 1
       ZOO_SERVERS: server.1=zoo1:2888:3888;2181 server.2=zoo2:2888:3888;2181 server.3=zoo3:2888:3888;2181
+    volumes:
+      - ./conf:/conf
+      - ./data:/data
 
   zoo2:
     image: zookeeper
@@ -20,6 +23,9 @@ services:
     environment:
       ZOO_MY_ID: 2
       ZOO_SERVERS: server.1=zoo1:2888:3888;2181 server.2=zoo2:2888:3888;2181 server.3=zoo3:2888:3888;2181
+    volumes:
+      - ./conf:/conf
+      - ./data2:/data
 
   zoo3:
     image: zookeeper
@@ -30,3 +36,14 @@ services:
     environment:
       ZOO_MY_ID: 3
       ZOO_SERVERS: server.1=zoo1:2888:3888;2181 server.2=zoo2:2888:3888;2181 server.3=zoo3:2888:3888;2181
+    volumes:
+      - ./conf:/conf
+      - ./data3:/data
+
+  zoonavigator:
+    image: elkozmon/zoonavigator
+    restart: always
+    ports:
+      - 9000:9000
+    environment:
+      ZOOKEEPER_HOSTS: zoo1:2181,zoo2:2181,zoo3:2181
